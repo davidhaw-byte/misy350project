@@ -1,0 +1,23 @@
+[
+    {
+        "id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "name": "Ivonne Rivera",
+        "email": "bonny@gmail.com",
+        "password": "Il1kefl0wer$",
+        "role": "Doctor"
+    },
+    {
+        "id": "fd96c2a4-6c63-47e5-95e4-fddc3ea406be",
+        "name": "David Hawtof",
+        "email": "dgh@gmail.com",
+        "password": "dowman56!!",
+        "role": "Patient"
+    },
+    {
+        "id": "1554bd50-54b7-4d5b-96c4-0a6809b95ba1",
+        "name": "bob bob",
+        "email": "uwu@gmail.com",
+        "password": "UwU123!",
+        "role": "Doctor"
+    }
+]
