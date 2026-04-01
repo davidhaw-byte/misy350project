@@ -1,0 +1,34 @@
+[
+    {
+        "appointment_id": "db6879f2-af92-476b-8865-4d5ac24341d5",
+        "patient_id": null,
+        "doctor_id": "1",
+        "date": "03/20/2026, 13:00",
+        "length": "30 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "46b9324b-263a-45b2-82c6-88d1e3b9d802",
+        "patient_id": null,
+        "doctor_id": null,
+        "date": "2026-04-09 22:30:00",
+        "length": "15 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "be652281-d944-4a37-9590-818e83e028ee",
+        "patient_id": null,
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-05-08 22:31:00",
+        "length": "30 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "e78346b8-6b9b-45fd-93c0-b994c786fa42",
+        "patient_id": null,
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-05-05 01:15:00",
+        "length": "30 minutes",
+        "status": "available"
+    }
+]
