@@ -46,9 +46,9 @@ appointments = [
         "appointment_id" : str(uuid.uuid4()),
         "patient_id" : None,
         "doctor_id" : "1",#Change ID
-        "date" : "03/20/2026, 13:00",
+        "date" : "2026-04-10 22:30:00",
         "length": "30 minutes",
-        "status" : "available"
+        "status" : "scheduled"
     }
 ]
 possible_lengths = ["15 minutes", "30 minutes", "45 minutes", "60 minutes"]
@@ -158,7 +158,7 @@ elif st.session_state["page"] == "register":
 if st.session_state["role"] == "Patient":
     if st.session_state["page"] == "home":
         st.set_page_config("Patient Appointment Tracker", layout = "wide", initial_sidebar_state= "expanded")
-        st.header("Patient Home") 
+        st.header("Patient Dashboard", text_alignment= "center") 
         st.divider()
         tab11, tab22 = st.tabs(["View Available Appointments", "Schedule an Appointment"], width="stretch")
         with tab11:
@@ -169,40 +169,115 @@ if st.session_state["role"] == "Patient":
 elif st.session_state["role"] == "Doctor":
     if st.session_state["page"] == "home":
         st.set_page_config("Patient Appointment Tracker", layout = "wide", initial_sidebar_state= "expanded")
-        st.header("Doctor Home")
+        st.header("Doctor Dashboard", text_alignment="center")
         st.divider()
-        tab1, tab3, tab4 = st.tabs(["Create Availabilty", "Update Appointments", "Delete Appointments"], width= "stretch")
+        tab1, tab2 = st.tabs(["Create Availabilty", "Update Appointments"], width= "stretch", )
         with tab1:
-            appt_dateandtime = st.datetime_input("Date and Time Available")
-            appt_length = st.selectbox("Appointment Length", possible_lengths)
-            if st.button("Create Appointment", key = "apptcreatebtn", type="primary", use_container_width=True):
-                with st.spinner("Creating..."):
-                    time.sleep(2)
-                    appt_exists = False
+            col1, col2 = st.columns([3,3])
+            with col1:
+                appt_dateandtime = st.datetime_input("Date and Time Available")
+                appt_length = st.selectbox("Appointment Length", possible_lengths)
+                if st.button("Create Appointment", key = "apptcreatebtn", type="primary", use_container_width=True):
+                    with st.spinner("Creating..."):
+                        time.sleep(2)
+                        appt_exists = False
+                        for appointment in appointments:
+                            if (appointment["date"] == str(appt_dateandtime)) & (appointment["doctor_id"] == st.session_state["userid"]):
+                                appt_exists = True
+                                st.error("Appointment Already Exists!")
+                                break
+                        if not appt_exists:
+                            appointments.append(
+                                {
+                                    "appointment_id" : str(uuid.uuid4()),
+                                    "patient_id" : None,
+                                    "doctor_id" : st.session_state["userid"],
+                                    "date" : str(appt_dateandtime),
+                                    "length": appt_length,
+                                    "status" : "available"
+                                }
+                            )
+                            with json_path_appointments.open("w",encoding = "utf-8") as f:
+                                json.dump(appointments, f, indent = 4)
+                            st.success(f"Appointment Created {appt_dateandtime}")
+            with col2:
+                search_date = st.date_input("Select Date", key = "search_for_date")
+                found_appointments = []
+                for appointment in appointments:
+                    format_pattern = "%Y-%m-%d %H:%M:%S"
+                    new_date = datetime.strptime(appointment['date'], format_pattern)
+                    if new_date.date() == search_date:
+                        found_appointments.append(appointment)
+                if found_appointments == []:
+                    st.error("No Appointments on that day")      
+                else:                  
+                    appt_by_date = st.dataframe(found_appointments) #Remove ID Columns with names and sort by time
+
+        with tab2:
+            col1, col2 = st.columns([4,2])
+            selected_appointments = None
+            with col1:
+                appointment_list = appointments
+                if "selected_status_filter" in st.session_state:
+                    appointment_list = []
                     for appointment in appointments:
-                        if (appointment["date"] == str(appt_dateandtime)) & (appointment["doctor_id"] == st.session_state["userid"]):
-                            appt_exists = True
-                            st.error("Appointment Already Exists!")
-                            break
-                    if not appt_exists:
-                        appointments.append(
-                            {
-                                "appointment_id" : str(uuid.uuid4()),
-                                "patient_id" : None,
-                                "doctor_id" : st.session_state["userid"],
-                                "date" : str(appt_dateandtime),
-                                "length": appt_length,
-                                "status" : "available"
-                            }
-                        )
-                        with json_path_appointments.open("w",encoding = "utf-8") as f:
-                            json.dump(appointments, f, indent = 4)
-                        st.success(f"Appointment Created {appt_dateandtime}")
+                        if appointment["status"] == st.session_state["selected_status_filter"]:
+                            appointment_list.append(appointment)
 
-        with tab3:
-            pass
 
-        with tab4:
-            pass
+
+                event = st.dataframe(
+                    appointments,
+                        on_select="rerun",
+                        selection_mode="single-row"
+                    )
+
+                # Check if the user actually clicked on a row
+                if event.selection.rows:
+                    selected_index = event.selection.rows[0]
+                    
+                    # Use the index to grab the original dictionary from your list
+                    selected_appointments = appointment_list[selected_index]
+            with col2:
+                with st.container(border= True):
+                    st.markdown("### Appointment Details")
+                    if selected_appointments:
+                        with st.container(border= True):
+                            st.markdown(f"**Status:** {selected_appointments['status']}")
+                            st.markdown(f"**Appointment Time:** {selected_appointments['date']}")
+                            st.markdown(f"**Appointment Length:** {selected_appointments['length']}")
+                            #st.markdown(f"**Submit Date:** {selected_request['submitted_timestamp']}")
+                            #st.markdown(f"**Excuse Type:** {selected_request['excuse_type']}")
+                            #st.markdown(f"**Explanation:** {selected_request['explanation']}")
+                        tab3, tab4 = st.tabs(['Change Status', 'Delete Availability'])
+                        with tab3:
+                            if selected_appointments['status'].strip().lower() == "scheduled":
+                                update_status = st.radio("Change Status", ["Cancel", "Completed", "No Show"], key="decision_radio")
+                                    
+
+                                if st.button("Record Change", key = "record_status_change_btn", type="primary",use_container_width=True):
+                                    with st.spinner("Recording the change..."):
+
+                                        for appointment in appointments:
+                                            if appointment["appointment_id"] == selected_appointments["appointment_id"]:
+                                                appointment["status"] = update_status
+                                                break
+                                            
+                                        with open(json_path_appointments,"w") as f :
+                                            json.dump(appointments,f)
+                                        
+                                    st.success("Information recorded.")
+                                    time.sleep(4)
+                                    st.rerun()
+                        with tab4:
+                            if st.button("Delete Selected Appointment", key = "doctor_dlt_btn", type="primary"):
+                                with st.spinner("Deleting..."):
+                                    time.sleep(2)
+                                    appointments.remove(appointments[selected_index]) 
+                                    with open(json_path_appointments, "w") as f:
+                                        json.dump(appointments, f)
+                                    st.success("Appointment Deleted!")
+                                    time.sleep(2)     
+                                    st.rerun()
 
 
