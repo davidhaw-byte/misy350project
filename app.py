@@ -68,6 +68,16 @@ with st.sidebar:
     if "logged_in" in st.session_state and st.session_state["logged_in"] != False:
         user = st.session_state["user"]
         st.markdown(f"Welcome {user['name']}")
+        if st.session_state["role"] == 'Patient':
+            if st.button("Patient Dashboard", type="primary", use_container_width=True):
+                st.session_state["page"] = "home"
+                st.rerun()
+            if st.button("View Appointments", type="primary", use_container_width=True):
+                st.session_state["page"] = "patient_appt_view"
+                st.rerun()
+            if st.button("Schedule Appointment", type="primary", use_container_width=True):
+                st.session_state["page"] = "patient_schedule"
+                st.rerun()
         if st.button("Log Out", type = "primary", use_container_width=True):
             with st.spinner("Logging out..."):
                 time.sleep(3)
@@ -160,12 +170,147 @@ if st.session_state["role"] == "Patient":
         st.set_page_config("Patient Appointment Tracker", layout = "wide", initial_sidebar_state= "expanded")
         st.header("Patient Dashboard", text_alignment= "center") 
         st.divider()
-        tab11, tab22 = st.tabs(["View Available Appointments", "Schedule an Appointment"], width="stretch")
-        with tab11:
-            pass
-        with tab22:
-            pass
-
+        colpat1, colpat2 = st.columns([4,2])
+        with colpat1:
+            st.subheader("Available Appointments", text_alignment='center')
+            available_appts = []
+            for appointment in appointments:
+                if appointment['status'] == 'available':
+                    available_appts.append(appointment)
+            st.dataframe(available_appts[:5], column_order=['status', 'doctor_id', 'date', 'length'])
+            if st.button("View All", type = "primary", use_container_width=True):
+                st.session_state["page"] = "patient_appt_view"
+                st.rerun()
+        with colpat2:
+            st.subheader("ChatBot", text_alignment="center")
+    elif st.session_state['page'] == "patient_appt_view":
+        st.set_page_config("Patient Appointment Tracker", layout = "wide", initial_sidebar_state= "expanded")
+        st.header("Available Appointments")
+        st.divider()
+        full_av_appts = []
+        for appointment in appointments:
+            if appointment['status'] == 'available':
+                full_av_appts.append(appointment)
+        st.dataframe(full_av_appts, column_order=['status', 'doctor_id', 'date', 'length'])
+        if st.button("Schedule Appointment", type="primary", use_container_width=True):
+            st.session_state["page"] = "patient_schedule"
+            st.rerun()
+    elif st.session_state["page"] == "patient_schedule":
+        st.set_page_config("Patient Appointment Tracker", layout = "wide", initial_sidebar_state= "expanded")
+        st.header("Schedule Appointments")
+        st.divider()
+        colpat3, colpat4 = st.columns([4,2])
+        with colpat3:
+            tabpat1, tabpat2 = st.tabs(["Available Appointments", "Your Appointments"])
+            with tabpat1:
+                with st.container(border=True):
+                    #date_search = st.datetime_input("Search by Date and time")
+                    full_av_appts = []
+                    #time_specific_appts = []
+                    #search_appts = None
+                    all_appts = None
+                    selected_all_appts=None
+                    #selected_search_appt= None
+                    for appointment in appointments:
+                        if appointment['status'] == 'available':
+                            full_av_appts.append(appointment)
+                            #if appointment['date'] == str(date_search):
+                                #time_specific_appts.append(appointment)
+                    #if st.button("Search by Date", type="primary", use_container_width= True):
+                        #search_appts = st.dataframe(time_specific_appts, column_order=['status', 'doctor_id', 'date', 'length'], on_select="rerun", selection_mode="single-row")
+                    else:
+                        all_appts = st.dataframe(full_av_appts, column_order=['status', 'doctor_id', 'date', 'length'], on_select="rerun", selection_mode="single-row")
+                    if all_appts:
+                        if all_appts.selection.rows:
+                            all_appts_index = all_appts.selection.rows[0]
+                            #Use the index to grab the original dictionary from your list
+                            selected_all_appts = full_av_appts[all_appts_index]
+                    #elif search_appts:
+                        #if search_appts.selection.rows:
+                            #search_appt_index = search_appts.selection.rows[0]
+                            #selected_search_appt = time_specific_appts[search_appt_index]
+            with tabpat2:
+                with st.container(border=True):
+                    your_appt_df=None
+                    selected_your_appt = None
+                    your_appts = []
+                    for appointment in appointments:
+                        if appointment["patient_id"] == st.session_state["userid"]:
+                            your_appts.append(appointment)
+                    if your_appts == []: 
+                        st.error("No Appointments Scheduled")
+                    else:
+                        your_appt_df = st.dataframe(your_appts, on_select="rerun", column_order=["doctor_id", "status", "date", "length"])
+                    if your_appt_df:
+                        if your_appt_df.selection.rows:
+                            your_appt_index = your_appt_df.selection.rows[0]
+                            selected_your_appt = your_appts[your_appt_index]
+        with colpat4:
+            with st.container(border= True):
+                st.markdown("### Appointment Details")
+                if selected_all_appts: #or selected_search_appt:
+                    with st.container(border= True):
+                        st.markdown(f"**Status:** {selected_all_appts['status']}")
+                        st.markdown(f"**Date and Time:** {selected_all_appts['date']}")
+                        st.markdown(f"**Length:** {selected_all_appts['length']}")
+                        st.markdown(f"**Doctor ID:** {selected_all_appts['doctor_id']}")
+                        #st.markdown(f"**Excuse Type:** {selected_all_appts['excuse_type']}")
+                        #st.markdown(f"**Explanation:** {selected_all_appts['explanation']}")
+                        if st.button("Book Appointment", key = "book_appt_btn", type="primary",use_container_width=True):
+                            with st.spinner("Booking Appointment..."):
+                                for appointment in appointments:
+                                    if appointment["appointment_id"] == selected_all_appts["appointment_id"]:
+                                        appointment["status"] = "scheduled"
+                                        appointment["patient_id"] = st.session_state['userid']
+                                        break
+                                
+                                with open(json_path_appointments,"w") as f :
+                                    json.dump(appointments,f)
+                            
+                            st.success("Appointment Booked.")
+                            time.sleep(3)
+                            st.rerun()
+                elif selected_your_appt:
+                    with st.container(border= True):
+                        st.markdown(f"**Status:** {selected_your_appt['status']}")
+                        st.markdown(f"**Date and Time:** {selected_your_appt['date']}")
+                        st.markdown(f"**Length:** {selected_your_appt['length']}")
+                        st.markdown(f"**Doctor ID:** {selected_your_appt['doctor_id']}")
+                        #st.markdown(f"**Excuse Type:** {selected_all_appts['excuse_type']}")
+                        #st.markdown(f"**Explanation:** {selected_all_appts['explanation']}")
+                        tabpat3, tabpat4 = st.tabs(["Cancel Appointment","Reschedule Appointment"])
+                        with tabpat3:
+                            if st.button("Cancel Appointment", key = "cancel_appt_btn", type="primary",use_container_width=True):
+                                with st.spinner("Canceling Appointment..."):
+                                    for appointment in appointments:
+                                        if appointment["appointment_id"] == selected_all_appts["appointment_id"]:
+                                            appointment["status"] = "available"
+                                            appointment["patient_id"] = None
+                                            break
+                                    
+                                    with open(json_path_appointments,"w") as f :
+                                        json.dump(appointments,f)
+                                
+                                st.success("Appointment Canceled.")
+                                time.sleep(3)
+                                st.rerun()
+                        with tabpat4:
+                            reschedule_date = st.datetime_input("Reschedule Appointment")
+                            if st.button("Reschedule Appointment", key = "reschedule_appt_btn", type="primary",use_container_width=True):
+                                with st.spinner("Rescheduling Appointment..."):
+                                    for appointment in appointments:
+                                        if appointment["appointment_id"] == selected_all_appts["appointment_id"]:
+                                            appointment["status"] = "rescheduled"
+                                            appointment["date"] = str(reschedule_date)
+                                            break
+                                    
+                                    with open(json_path_appointments,"w") as f :
+                                        json.dump(appointments,f)
+                                
+                                st.success("Appointment Rescheduled.")
+                                time.sleep(3)
+                                st.rerun()
+                        
 elif st.session_state["role"] == "Doctor":
     if st.session_state["page"] == "home":
         st.set_page_config("Patient Appointment Tracker", layout = "wide", initial_sidebar_state= "expanded")
@@ -211,7 +356,7 @@ elif st.session_state["role"] == "Doctor":
                 if found_appointments == []:
                     st.error("No Appointments on that day")      
                 else:                  
-                    appt_by_date = st.dataframe(found_appointments) #Remove ID Columns with names and sort by time
+                    appt_by_date = st.dataframe(found_appointments, column_order=['date', 'length', 'status']) #Remove ID Columns with names and sort by time
 
         with tab2:
             col1, col2 = st.columns([4,2])
