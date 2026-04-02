@@ -25,6 +25,14 @@ if "role" not in st.session_state:
 if "userid" not in st.session_state:
     st.session_state["userid"] = None
 
+if "messages" not in st.session_state:
+    st.session_state["messages"] = [
+        {
+            "role": "assistant",
+            "content": "Hi! How can I help you?"
+        }
+    ]
+
 users = [
     {
         "id" : str(uuid.uuid4()),
@@ -182,7 +190,42 @@ if st.session_state["role"] == "Patient":
                 st.session_state["page"] = "patient_appt_view"
                 st.rerun()
         with colpat2:
-            st.subheader("ChatBot", text_alignment="center")
+            st.subheader("Patient Chat Assistant", text_alignment="center")
+            st.caption("Try Asking: When's my next Appointment")
+            if st.button("Clear", key= "clear_chat_btn"):
+                    st.session_state["messages"] = [
+                        {
+                            "role" : "assistant", 
+                            "content" : "Hi! How can I help you?"
+                        }
+                    ]
+
+            with st.container(border=True, height = 150):
+                for message in st.session_state["messages"]:
+                    with st.chat_message(message["role"]):
+                        st.write(message["content"])
+            
+            user_input = st.chat_input("Ask a question ... ", accept_file=True)
+            if user_input:
+                with st.spinner("Thinking..."):
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "user",
+                            "content" : user_input
+                        }
+                    )
+
+                    ai_response = "I couldn't find an answer for it, try again"
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "assistant",
+                            "content" : ai_response
+                        }
+                    )
+                    time.sleep(2)
+                    st.rerun()
+
+
     elif st.session_state['page'] == "patient_appt_view":
         st.set_page_config("Patient Appointment Tracker", layout = "wide", initial_sidebar_state= "expanded")
         st.header("Available Appointments")
@@ -424,5 +467,3 @@ elif st.session_state["role"] == "Doctor":
                                     st.success("Appointment Deleted!")
                                     time.sleep(2)     
                                     st.rerun()
-
-
