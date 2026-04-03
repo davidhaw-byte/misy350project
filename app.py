@@ -136,7 +136,10 @@ if st.session_state["page"] == "login":
                     st.error("Invalid credentials")
     url = "registerpage" # Ask about in class
     link_text = "Create Account"
-    st.markdown(f"Don't have an account? [{link_text}]({url})")
+    st.markdown(f"Don't have an account?") #[{link_text}]({url})")
+    if st.button("Create Account", type="primary", use_container_width=False):
+        st.session_state["page"] = "register"
+        st.rerun()
         
 
 elif st.session_state["page"] == "register":
@@ -205,8 +208,101 @@ if st.session_state["role"] == "Patient":
                     with st.chat_message(message["role"]):
                         st.write(message["content"])
             
-            user_input = st.chat_input("Ask a question ... ", accept_file=True)
-            if user_input:
+            user_input = st.chat_input("Ask a question ... ")
+            if user_input == "How long is my next appointment":
+                with st.spinner("Thinking..."):
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "user",
+                            "content" : user_input
+                        }
+                    )
+                    next_length = None
+                    for appointment in appointments:
+                        if st.session_state["userid"] == appointment["patient_id"]:
+                            next_length = appointment['length']
+                            break
+                    if next_length:
+                        ai_response = f"Your next appointment is {next_length} long"
+                    else:
+                        ai_response = "You have no appointments scheduled"
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "assistant",
+                            "content" : ai_response
+                        }
+                    )
+                    time.sleep(2)
+                    st.rerun()
+            elif user_input == "When is my next appointment":
+                with st.spinner("Thinking..."):
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "user",
+                            "content" : user_input
+                        }
+                    )
+                    next_date = None
+                    for appointment in appointments:
+                        if st.session_state["userid"] == appointment["patient_id"]:
+                            next_date = appointment['date']
+                            break
+                    if next_date:
+                        ai_response = f"Your next appointment is {next_date}"
+                    else:
+                        ai_response = "You have no appointments scheduled"
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "assistant",
+                            "content" : ai_response
+                        }
+                    )
+                    time.sleep(2)
+                    st.rerun()
+            elif user_input == "Who is my next appointment with":
+                with st.spinner("Thinking..."):
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "user",
+                            "content" : user_input
+                        }
+                    )
+                    next_doctor = None
+                    for appointment in appointments:
+                        if st.session_state["userid"] == appointment["patient_id"]:
+                            next_doctor = appointment['doctor_id']
+                            break
+                    if next_doctor:
+                        ai_response = f"Your next appointment is with {next_doctor}"
+                    else:
+                        ai_response = "You have no appointments scheduled"
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "assistant",
+                            "content" : ai_response
+                        }
+                    )
+                    time.sleep(2)
+                    st.rerun()
+            elif user_input == "How do I schedule an appointment":
+                with st.spinner("Thinking..."):
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "user",
+                            "content" : user_input
+                        }
+                    )
+
+                    ai_response = "Look to the sidebar on the left side and select the schedule appointment button. Then select the appointment time you like and Book the appointment!"
+                    st.session_state["messages"].append(
+                        {
+                            "role" : "assistant",
+                            "content" : ai_response
+                        }
+                    )
+                    time.sleep(2)
+                    st.rerun()
+            elif user_input:
                 with st.spinner("Thinking..."):
                     st.session_state["messages"].append(
                         {
