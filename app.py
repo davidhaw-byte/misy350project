@@ -174,6 +174,7 @@ elif st.session_state["page"] == "register":
                             json.dump(users, f, indent = 4)
                     st.success(f"Registered {namereg_input}!")
                     time.sleep(2)
+                    st.session_state["page"] = "login"
                     st.rerun()
 
 if st.session_state["role"] == "Patient":

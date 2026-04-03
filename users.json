@@ -19,5 +19,19 @@
         "email": "uwu@gmail.com",
         "password": "UwU123!",
         "role": "Doctor"
+    },
+    {
+        "id": "42cfdaac-3c52-40dc-a6c8-05bc3a4e9a78",
+        "name": "Rahul Patel",
+        "email": "rahulp@yahoo.com",
+        "password": "rp",
+        "role": "Doctor"
+    },
+    {
+        "id": "c7272fab-ebfa-4d83-9eaa-e451fa9c9543",
+        "name": "Dane Robertson",
+        "email": "daner@yahoo.com",
+        "password": "dr",
+        "role": "Patient"
     }
 ]
