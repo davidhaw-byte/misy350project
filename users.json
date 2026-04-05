@@ -33,5 +33,12 @@
         "email": "daner@yahoo.com",
         "password": "dr",
         "role": "Patient"
+    },
+    {
+        "id": "fcbd12fa-e5b5-448d-b7e2-a95262e22573",
+        "name": "jeff",
+        "email": "blaa@gmail.com",
+        "password": "123",
+        "role": "Doctor"
     }
 ]
