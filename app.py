@@ -29,6 +29,6 @@ elif page == "home" and role == "Patient":
 elif page == "patient_schedule" and role == "Patient":
     ui.render_patient_schedule(appointment_service)
 elif page == "home" and role == "Doctor":
-    ui.render_doctor_dashboard(appointment_service)
+    ui.render_doctor_dashboard(appointment_service, chat_service)
 else:
     st.info("Please use the sidebar to navigate to a page.")
