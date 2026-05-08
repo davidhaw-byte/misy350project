@@ -1,0 +1,44 @@
+[
+    {
+        "id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "name": "Ivonne Rivera",
+        "email": "bonny@gmail.com",
+        "password": "Il1kefl0wer$",
+        "role": "Doctor"
+    },
+    {
+        "id": "fd96c2a4-6c63-47e5-95e4-fddc3ea406be",
+        "name": "David Hawtof",
+        "email": "dgh@gmail.com",
+        "password": "dowman56!!",
+        "role": "Patient"
+    },
+    {
+        "id": "1554bd50-54b7-4d5b-96c4-0a6809b95ba1",
+        "name": "bob bob",
+        "email": "uwu@gmail.com",
+        "password": "UwU123!",
+        "role": "Doctor"
+    },
+    {
+        "id": "42cfdaac-3c52-40dc-a6c8-05bc3a4e9a78",
+        "name": "Rahul Patel",
+        "email": "rahulp@yahoo.com",
+        "password": "rp",
+        "role": "Doctor"
+    },
+    {
+        "id": "c7272fab-ebfa-4d83-9eaa-e451fa9c9543",
+        "name": "Dane Robertson",
+        "email": "daner@yahoo.com",
+        "password": "dr",
+        "role": "Patient"
+    },
+    {
+        "id": "fcbd12fa-e5b5-448d-b7e2-a95262e22573",
+        "name": "jeff",
+        "email": "blaa@gmail.com",
+        "password": "123",
+        "role": "Doctor"
+    }
+]
