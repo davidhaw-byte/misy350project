@@ -258,7 +258,7 @@ def render_calendar_page(appointment_service: AppointmentService) -> None:
             "no show": len([appt for appt in appointments if appt.status == "no show"]),
             "cancel": len([appt for appt in appointments if appt.status == "cancel"]),
         }
-        st.write(status_counts)
+        st.dataframe(status_counts)
 
 
 def render_patient_dashboard(
