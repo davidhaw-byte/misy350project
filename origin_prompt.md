@@ -9,6 +9,8 @@ Now I want you to create a seperate plan to improve the UI based on your previou
 
 analyze the current app structure. analyze the current app structure. explain what should be protected before making changes. Just analyze, do not write any code. Please add the prompt to the origin prompt file
 
+Now I want you to create a separate plan. This plan should address missing features, improvements, UI design, Streamlit pages, routing, st.session_state, user actions, and feedback messages. This plan should look for improving the UI and features of the site while remaining in the scope of what is required from the project. Please recall earlier messages that gave context of the goals of this application. Again, focus on improvement where possible but not micromanaging. Add this plan to the feature_plan.md doc with the date and time and the prompt. Also add the prompt to the origin prompt file.
+
 Please redo the plan and document the new plan. The previous plan added un needed layers. We want to just keep it to the ui, data and service layer. The goal of this plan is not to overdo the made changes but to ensure their is a clear distinction between layers.
 
 study what the app currently does. The analysis should identify current features, missing features, incomplete workflows, usability issues, and areas for improvement. This is a separate analysis from the structural analysis. Just analyze, do not write any code. Please add the prompt to the origin porompt file

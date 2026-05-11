@@ -94,5 +94,59 @@ Enhance the UI and user experience based on the feature analysis, addressing mis
 - Structure maintained: Layered architecture preserved, no breaking changes to data/services.
 - Functionality preserved: Core features (login, booking, etc.) still work as before.
 
+---
+
+## Feature Improvement Plan
+
+Date: 2026-05-11
+Time: 09:15 AM
+
+### Goal
+Produce a focused UI and feature improvement plan that enhances the current Streamlit appointment scheduler without adding unnecessary architectural layers. Keep the scope to UI, service, and data layers while improving usability, routing, session state behavior, user actions, and feedback.
+
+### Highest-Impact Improvements
+- Keep the existing layer separation: `ui.py` for presentation, `services/` for business logic, `data/` for persistence.
+- Strengthen the user journey for both patient and doctor roles through clearer Streamlit pages and navigation.
+- Improve feedback and state handling so actions feel responsive and predictable.
+
+### UI Design and Page Structure
+- **Simplify page flow**: Use sidebar navigation with clear role-specific items, including `Dashboard`, `Schedule`, `Profile`, and `Logout`.
+- **Use containers and columns**: Group appointment summaries, action buttons, and chat into distinct visible sections.
+- **Avoid clutter**: Keep pages focused; show only relevant actions based on user role.
+- **Add status labels and headers**: Show appointment status prominently with `st.caption()` or styled text.
+
+### Streamlit Pages and Routing
+- Maintain `app.py` as the central router using `st.session_state['page']`.
+- Ensure pages are role-guarded: patients cannot access doctor-specific schedule management and vice versa.
+- Add a lightweight profile page that shows user details and includes logout.
+- Keep routing logic simple: page state updates trigger `st.experimental_rerun()` only when needed.
+
+### Session State Improvements
+- Initialize required session keys once in `ui.py` (`page`, `user_id`, `role`, `feedback`, `appointment_filter`, etc.).
+- Use `st.session_state['feedback']` to store one current message and type, rendered consistently by a common feedback helper.
+- Reset or update only the state values needed for a user action rather than clearing the whole session unless logging out.
+- Keep navigation state separate from temporary form values.
+
+### User Actions and Feedback
+- **Booking/cancellation/rescheduling**: Show explicit success or error messages after each action.
+- **Form validation**: Validate required inputs before calling services, and explain why a submission failed.
+- **Action confirmation**: For cancellations or deletions, prompt users before committing.
+- **Consistent messaging**: Use a shared helper function to render `st.success()`, `st.error()`, or `st.info()` from session state.
+
+### Missing Features to Address
+- Add a simple appointment filter by date or status for both patient and doctor views.
+- Add a basic scheduler page for patients with available slots and current appointments separated into tabs.
+- Add a doctor availability section that clearly shows open slots versus scheduled appointments.
+- Add a small profile or settings section to make the app feel more complete.
+
+### Scope Guardrails
+- Do not introduce new architectural layers beyond UI, service, and data.
+- Do not convert the app into a large multi-page Streamlit app with many unrelated pages.
+- Avoid over-engineering: improvements should be practical and directly support the scheduler workflows.
+- Keep the app logic readable, with UI code in `ui.py` and business rules in the service layer.
+
+### Original Prompt
+Now I want you to create a separate plan. This plan should address missing features, improvements, UI design, Streamlit pages, routing, st.session_state, user actions, and feedback messages. This plan should look for improving the UI and features of the site while remaining in the scope of what is required from the project. Please recall earlier messages that gave context of the goals of this application. Again, focus on improvement where possible but not micromanaging. Add this plan to the feature_plan.md doc with the date and time and the prompt. Also add the prompt to the origin prompt file.
+
 ### Original Prompt
 Now I want you to create a seperate plan to improve the UI based on your previous feature analysis. This plan should address missing features, improvements, UI design, Streamlit pages, routing, st.session_state, user actions, and feedback messages. Include the original prompt in the feature_plan.md file as well as in the origin prompt file. Add the date and time as well to the feature plan markdown

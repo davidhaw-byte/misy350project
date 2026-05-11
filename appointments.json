@@ -1,1 +1,178 @@
-[{"appointment_id": "db6879f2-af92-476b-8865-4d5ac24341d5", "patient_id": null, "doctor_id": "1", "date": "2026-04-10 22:30:00", "length": "30 minutes", "status": "Cancel"}, {"appointment_id": "be652281-d944-4a37-9590-818e83e028ee", "patient_id": "fd96c2a4-6c63-47e5-95e4-fddc3ea406be", "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe", "date": "2026-05-08 22:31:00", "length": "30 minutes", "status": "scheduled"}, {"appointment_id": "e78346b8-6b9b-45fd-93c0-b994c786fa42", "patient_id": null, "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe", "date": "2026-05-05 01:15:00", "length": "30 minutes", "status": "scheduled"}, {"appointment_id": "149660d1-70f5-4751-ac17-2f1931c1161c", "patient_id": null, "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe", "date": "2026-06-15 08:00:00", "length": "30 minutes", "status": "scheduled"}, {"appointment_id": "910ca20d-b1fc-46f0-8753-174cbd5e872f", "patient_id": null, "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe", "date": "2026-06-15 10:30:00", "length": "45 minutes", "status": "available"}, {"appointment_id": "e3d81b70-804c-4523-ae31-fe62dc1e0bea", "patient_id": null, "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe", "date": "2026-06-15 09:45:00", "length": "15 minutes", "status": "available"}, {"appointment_id": "a25030e4-6113-4b78-89e5-14c16a1fae9d", "patient_id": null, "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe", "date": "2026-06-15 13:00:00", "length": "30 minutes", "status": "available"}]
+[
+    {
+        "appointment_id": "db6879f2-af92-476b-8865-4d5ac24341d5",
+        "patient_id": null,
+        "doctor_id": "1",
+        "date": "2026-04-10 22:30:00",
+        "length": "30 minutes",
+        "status": "Cancel"
+    },
+    {
+        "appointment_id": "be652281-d944-4a37-9590-818e83e028ee",
+        "patient_id": "fd96c2a4-6c63-47e5-95e4-fddc3ea406be",
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-05-08 22:31:00",
+        "length": "30 minutes",
+        "status": "scheduled"
+    },
+    {
+        "appointment_id": "e78346b8-6b9b-45fd-93c0-b994c786fa42",
+        "patient_id": null,
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-05-05 01:15:00",
+        "length": "30 minutes",
+        "status": "scheduled"
+    },
+    {
+        "appointment_id": "149660d1-70f5-4751-ac17-2f1931c1161c",
+        "patient_id": null,
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-06-15 08:00:00",
+        "length": "30 minutes",
+        "status": "scheduled"
+    },
+    {
+        "appointment_id": "910ca20d-b1fc-46f0-8753-174cbd5e872f",
+        "patient_id": null,
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-06-15 10:30:00",
+        "length": "45 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "e3d81b70-804c-4523-ae31-fe62dc1e0bea",
+        "patient_id": null,
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-06-15 09:45:00",
+        "length": "15 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "a25030e4-6113-4b78-89e5-14c16a1fae9d",
+        "patient_id": null,
+        "doctor_id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
+        "date": "2026-06-15 13:00:00",
+        "length": "30 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "gXhQ2EW1",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-11 19:33:19",
+        "length": "30 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "DUmrLkQe",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-12 20:33:19",
+        "length": "30 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "l984pFbV",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-14 01:33:19",
+        "length": "60 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "kDhNfo9Y",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-14 22:33:19",
+        "length": "45 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "kqckubxt",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-16 00:33:19",
+        "length": "45 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "9pgAW3Rx",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-17 00:33:19",
+        "length": "45 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "ecOb3ewu",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-18 02:33:19",
+        "length": "15 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "4UlAPZwd",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-18 23:33:19",
+        "length": "60 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "XEQSnu7v",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-19 23:33:19",
+        "length": "60 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "5XCt20Pm",
+        "patient_id": null,
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-20 18:33:19",
+        "length": "30 minutes",
+        "status": "available"
+    },
+    {
+        "appointment_id": "rZt24VKN",
+        "patient_id": "MYbRVmM5",
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-12 23:33:19",
+        "length": "45 minutes",
+        "status": "scheduled"
+    },
+    {
+        "appointment_id": "HxlU1ESO",
+        "patient_id": "MYbRVmM5",
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-13 20:33:19",
+        "length": "45 minutes",
+        "status": "scheduled"
+    },
+    {
+        "appointment_id": "Zxwb7O2w",
+        "patient_id": "MYbRVmM5",
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-14 21:33:19",
+        "length": "60 minutes",
+        "status": "scheduled"
+    },
+    {
+        "appointment_id": "jixtz1Bo",
+        "patient_id": "MYbRVmM5",
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-16 02:33:19",
+        "length": "60 minutes",
+        "status": "scheduled"
+    },
+    {
+        "appointment_id": "3rXh15tW",
+        "patient_id": "MYbRVmM5",
+        "doctor_id": "SjvgcHha",
+        "date": "2026-05-16 19:33:19",
+        "length": "45 minutes",
+        "status": "scheduled"
+    }
+]
