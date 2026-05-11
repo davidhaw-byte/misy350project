@@ -3,14 +3,14 @@
         "id": "da1f1178-ea86-40dc-bff8-26db74486fbe",
         "name": "Ivonne Rivera",
         "email": "bonny@gmail.com",
-        "password": "Il1kefl0wer$",
+        "password": "$2b$12$wyBFJei.SGC/U7.xDlesfuRxPcK8AHQUBWHu1b16D2/Q4kLsND1A.",
         "role": "Doctor"
     },
     {
         "id": "fd96c2a4-6c63-47e5-95e4-fddc3ea406be",
         "name": "David Hawtof",
         "email": "dgh@gmail.com",
-        "password": "dowman56!!",
+        "password": "$2b$12$KMeCFewW25tjKS9fYWFTpepM8rpW3UbFmpEtjzTX19p/pqtZs4Lou",
         "role": "Patient"
     },
     {

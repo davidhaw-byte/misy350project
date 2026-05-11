@@ -49,3 +49,91 @@ Now I want you to create a plan for the structural changes. This plan should foc
 - Database layer (`data/database.py`) is isolated from Streamlit and user session state, so persistence is handled independently of UI behavior.
 - Model layer (`data/models.py`) supports service behavior with object methods like `book()`, `cancel()`, and `reschedule()`, reducing raw dictionary mutation.
 
+## Simplified Layer Refinement Plan
+
+Date: 2024-12-19  
+Time: 11:30 AM  
+
+### Goal
+Ensure crystal-clear separation of concerns across the three core layers (UI, Service, Data) without adding unnecessary infrastructure. Focus on making the existing architecture more maintainable and testable.
+
+### Current Three-Layer Architecture
+1. **UI Layer** (`ui.py`): All Streamlit rendering and user interaction
+2. **Service Layer** (`services/`): Business logic, validation, and orchestration
+3. **Data Layer** (`data/`): Models and persistence
+
+### Layer Separation Principles
+
+#### UI Layer (`ui.py`) - What It Should Do
+- **Only**: Render components, handle user input, display feedback, manage page routing
+- **Never**: 
+  - Perform database operations directly
+  - Contain business logic or validation rules
+  - Access JSON files
+  - Have hardcoded appointment status checks or authentication logic
+- **Best Practice**: Call service methods and display results; let services handle logic
+
+#### Service Layer (`services/`) - What It Should Do
+- **Only**: Implement business logic, validate data, orchestrate operations, raise domain errors
+- **Components**:
+  - `AuthService`: Login, registration, password handling
+  - `AppointmentService`: Booking, cancellation, status updates, availability
+  - `AIChatService`: Chat responses and context building
+- **Never**:
+  - Directly access or manipulate UI elements
+  - Include Streamlit imports (except in type hints)
+  - Store Streamlit session state
+  - Make hardcoded UI decisions
+- **Best Practice**: Accept parameters, return results or errors; services are reusable and testable
+
+#### Data Layer (`data/`) - What It Should Do
+- **Only**: Model definition, serialization, persistence operations
+- **Components**:
+  - `models.py`: `User` and `Appointment` dataclasses with helpers
+  - `database.py`: `DatabaseManager` for JSON operations
+- **Never**:
+  - Contain business rules or validation logic
+  - Know about Streamlit
+  - Make decisions about appointment workflows
+  - Include service-level orchestration
+- **Best Practice**: Pure data operations; no side effects or complex logic
+
+### Refinement Focus Areas
+
+#### 1. Clean Imports
+- **Ensure**: Services do not import from `ui.py`
+- **Ensure**: Data layer does not import services
+- **Ensure**: UI layer imports services and data, but only for instantiation
+
+#### 2. Clear Method Contracts
+- **Services**: Return tuples `(result, error)` or simple types; raise exceptions only for critical failures
+- **Database**: Accept model objects, return model objects or None; handle I/O errors internally
+- **UI**: Accept service methods and session state; pass parameters to services
+
+#### 3. No Logic Leakage
+- **Common Anti-Pattern**: Business logic in UI (e.g., status validation in `st.selectbox`)
+- **Solution**: Move all logic to service layer; UI only calls methods
+- **Example**: Appointment cancellation should be validated in `AppointmentService.cancel()`, not in `ui.render_cancel_button()`
+
+#### 4. Type Consistency
+- **Use consistent return types**: Services return `(object, error_string)` pairs
+- **Use model objects**: Pass `User` and `Appointment` objects, not dictionaries
+- **Document assumptions**: Comment on expected data formats
+
+### Implementation Checklist
+- [ ] UI layer: No database imports, all business logic delegated to services
+- [ ] Service layer: No Streamlit imports, all logic is self-contained and testable
+- [ ] Data layer: Models and persistence only, no business logic
+- [ ] Method signatures: Clear contracts with consistent return types
+- [ ] Error handling: Services return error tuples; critical errors raise exceptions
+- [ ] Test-readiness: Services can be tested without UI or database mocks
+
+### Why This Matters
+- **Maintainability**: Changes to business logic don't require UI tweaks
+- **Reusability**: Services can be used by different UIs (CLI, API, etc.)
+- **Testability**: Services can be unit tested without Streamlit
+- **Debugging**: Clear layer boundaries make it easier to isolate issues
+
+### Original Prompt
+Please redo the plan and document the new plan. The previous plan added un needed layers. We want to just keep it to the ui, data and service layer. The goal of this plan is not to overdo the made changes but to ensure their is a clear distinction between layers.
+
